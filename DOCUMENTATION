@@ -20,7 +20,7 @@ If you would like to change to text length limit(default: 10) you should continu
 5. Make sure your ViewController.m file @synthesizes the IBOutlet:
 ----
 @implementation ViewController
-@synthesize textFieldLimit
+@synthesize textFieldLimit;
 ----
 
 6. Change the limit:
