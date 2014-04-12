@@ -1,0 +1,37 @@
+DOCUMENTATION:
+
+You can take a look at this thread: http://stackoverflow.com/questions/23024391/uitextfield-with-a-text-length-counter/23035971#23035971
+
+1. Grab the UITextFieldLimit.h and UITextFieldLimit.m files from this GitHub repository.
+2. Add the files to your Xcode project.
+
+3. Mark your UITextField in Storyboard and link it to this subclass using the Identity Inspector:
+http://i.stack.imgur.com/7lbJp.png
+
+If you would like to change to text length limit(default: 10) you should continue, otherwise you don't need to.
+
+4. Make sure your ViewController.h contains:
+----
+#import "UITextFieldLimit.h"
+
+/.../
+
+@property (weak, nonatomic) IBOutlet UITextFieldLimit *textFieldLimit; // <--Your connected IBOutlet
+----
+
+5. Make sure your ViewController.m file @synthesizes the IBOutlet:
+----
+@implementation ViewController
+@synthesize textFieldLimit
+----
+
+6. Change the limit:
+----
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+// Do any additional setup after loading the view, typically from a nib.
+
+    [textFieldLimit setLimit:25];// <-- and you won't be able to put more than 25 characters in the TextField.
+}
+----
