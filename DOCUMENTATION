@@ -13,9 +13,7 @@ If you would like to change to text length limit(default: 10) you should continu
 4. Make sure your ViewController.h contains:
 ----
 #import "UITextFieldLimit.h"
-
 /.../
-
 @property (weak, nonatomic) IBOutlet UITextFieldLimit *textFieldLimit; // <--Your connected IBOutlet
 ----
 
