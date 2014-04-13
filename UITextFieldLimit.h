@@ -19,10 +19,11 @@
 @property (retain, nonatomic) IBOutlet UILabel *limitLabel;
 
 @property (nonatomic, strong) UIColor *countTextColor;
-@property (nonatomic, strong) UIColor *countLabelBackgroundColor;
 @property (nonatomic, strong) UIFont *countFont;
 @property (nonatomic, assign) CGFloat defaultTextSize;
 @property (nonatomic, assign) BOOL fitCountTextSize;
+
+-(void)updateFieldStyle;
 
 
 @end
