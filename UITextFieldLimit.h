@@ -18,4 +18,7 @@
 @property (readwrite, nonatomic) long limit;
 @property (retain, nonatomic) IBOutlet UILabel *limitLabel;
 
+-(void)initializeLimitLabelWithFont:(UIFont *)font andTextColor:(UIColor *)textColor;
+
+
 @end
