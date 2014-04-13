@@ -46,7 +46,7 @@
 }
 
 -(void)initializeLimitLabel {
-    [self initializeLimitLabelWithFont:[UIFont fontWithName: @"Trebuchet MS" size:14.0f] andTextColor:[UIColor redColor]];// <-- Customize the label font and color. BUT! By customizing the size and, you will have to change the bounds
+    [self initializeLimitLabelWithFont:[UIFont fontWithName:@"AppleSDGothicNeo-Light" size:14.0] andTextColor:[UIColor blackColor]];// <-- Customize the label font and color. BUT! By customizing the size and, you will have to change the bounds
 }
 
 -(void)setLimit:(long)theLimit {
@@ -55,14 +55,31 @@
 }
 
 -(void)initializeLimitLabelWithFont:(UIFont *)font andTextColor:(UIColor *)textColor {
-    limitLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width-([[NSNumber numberWithFloat:font.pointSize] doubleValue]*(1.285714)), 8, 50, self.bounds.size.height)];
+    limitLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width-([[NSNumber numberWithFloat:font.pointSize] doubleValue]*(2.285714)), 8, 30, self.bounds.size.height)];
     
-    [limitLabel setNumberOfLines:1];
-    [limitLabel setTextColor:textColor];
+    if (!_defaultTextSize) {
+        _defaultTextSize = 14.0;
+    }
+    
+    if (_countTextColor) {
+        [limitLabel setTextColor:_countTextColor];
+    }else{
+        [limitLabel setTextColor:textColor];
+    }
+    
+    if (_countFont) {
+        [limitLabel setFont:_countFont];
+    } else {
+        [limitLabel setFont:font];
+    }
+    
     [limitLabel setBackgroundColor:[UIColor clearColor]];
-    [limitLabel setFont:font];
+    [limitLabel setAdjustsFontSizeToFitWidth:_fitCountTextSize];
+    [limitLabel setTextAlignment:NSTextAlignmentLeft];
+    [limitLabel setNumberOfLines:1];
     [limitLabel setText:@""];
-    [self addSubview:limitLabel];
+    [self setRightView:limitLabel];
+    [self setRightViewMode:UITextFieldViewModeWhileEditing];
     [self textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
     
     limitLabel.hidden=YES;
