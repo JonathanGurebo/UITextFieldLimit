@@ -23,7 +23,7 @@
 @property (nonatomic, assign) CGFloat defaultTextSize;
 @property (nonatomic, assign) BOOL fitCountTextSize;
 
--(void)updateFieldStyle;
+-(void)initializeLimitLabelWithFont:(UIFont *)font andTextColor:(UIColor *)textColor;
 
 
 @end

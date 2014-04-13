@@ -54,42 +54,13 @@
     [self textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
 }
 
--(void)updateFieldStyle{
-    
-    if (!_defaultTextSize) {
-        _defaultTextSize = 14.0;
-    }
-    
-    if (_countTextColor) {
-        [limitLabel setTextColor:_countTextColor];
-    }
-    
-    if (_countFont) {
-        [limitLabel setFont:_countFont];
-    }
-}
-
 -(void)initializeLimitLabelWithFont:(UIFont *)font andTextColor:(UIColor *)textColor {
     limitLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width-([[NSNumber numberWithFloat:font.pointSize] doubleValue]*(2.285714)), 8, 30, self.bounds.size.height)];
-    
-    if (!_defaultTextSize) {
-        _defaultTextSize = 14.0;
-    }
-    
-    if (_countTextColor) {
-        [limitLabel setTextColor:_countTextColor];
-    }else{
-        [limitLabel setTextColor:textColor];
-    }
-    
-    if (_countFont) {
-        [limitLabel setFont:_countFont];
-    } else {
-        [limitLabel setFont:font];
-    }
+
+    [limitLabel setTextColor:textColor];
+    [limitLabel setFont:font];
     
     [limitLabel setBackgroundColor:[UIColor clearColor]];
-    [limitLabel setAdjustsFontSizeToFitWidth:_fitCountTextSize];
     [limitLabel setTextAlignment:NSTextAlignmentLeft];
     [limitLabel setNumberOfLines:1];
     [limitLabel setText:@""];
