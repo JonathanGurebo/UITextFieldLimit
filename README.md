@@ -9,6 +9,7 @@ Features list:
 * Set the text length limit
 * Paste prevention
 * Displays a label of left characters inside the textfield, get hidden when you stop editing.
+* DELEGATE methods to know when the user reaches the limit and more.
 * Shake animation when no characters left.
 
 Copy the UITextFieldLimit.h and UITextFieldLimit.m files to your xcode project.
