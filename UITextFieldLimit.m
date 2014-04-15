@@ -12,32 +12,26 @@
 #import "UITextFieldLimit.h"
 
 @implementation UITextFieldLimit
-@synthesize limit,limitLabel;
+@synthesize limit,limitLabel,delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         limit=10;// -- Default limit
+        [super setDelegate:self];
         [self initializeLimitLabel];
-        self.delegate=self;
     }
     return self;
 }
 
 - (id)initWithCoder:(NSCoder *)inCoder {
-    if (self = [super initWithCoder:inCoder]) {
+    self = [super initWithCoder:inCoder];
+    if (self) {
         limit=10;// -- Default limit
+        [super setDelegate:self];
         [self initializeLimitLabel];
-        self.delegate = self;
     }
-    return self;
-}
-
--(id)init {
-    limit=10;// -- Default limit
-    [self initializeLimitLabel];
-    self.delegate=self;
     return self;
 }
 
@@ -46,7 +40,7 @@
 }
 
 -(void)initializeLimitLabel {
-    [self initializeLimitLabelWithFont:[UIFont fontWithName:@"AppleSDGothicNeo-Light" size:14.0] andTextColor:[UIColor blackColor]];// <-- Customize the label font and color. BUT! By customizing the size and, you will have to change the bounds
+    [self initializeLimitLabelWithFont:[UIFont fontWithName:@"AppleSDGothicNeo-Light" size:14.0] andTextColor:[UIColor redColor]];// <-- Customize the label font and color. BUT! By customizing the size and, you will have to change the bounds
 }
 
 -(void)setLimit:(long)theLimit {
@@ -74,8 +68,16 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     long MAXLENGTH=limit;
     NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if(newText.length==MAXLENGTH) {//Did reach limit
+        if([self.delegate respondsToSelector:@selector(textFieldLimit:didReachLimitWithLastEnteredText:inRange:)]) {
+            [self.delegate textFieldLimit:self didReachLimitWithLastEnteredText:string inRange:NSMakeRange(range.location, string.length)];
+        }
+    }
     if(newText.length>MAXLENGTH) {
         [self shakeLabel];
+        if([self.delegate respondsToSelector:@selector(textFieldLimit:didWentOverLimitWithDisallowedText:inDisallowedRange:)]) {
+            [self.delegate textFieldLimit:self didWentOverLimitWithDisallowedText:string inDisallowedRange:NSMakeRange(range.location, string.length)];
+        }
         return NO;
     }
     [limitLabel setText:[NSString stringWithFormat:@"%lu",MAXLENGTH-newText.length]];
