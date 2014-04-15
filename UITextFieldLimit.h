@@ -11,14 +11,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class UITextFieldLimit;
+
+@protocol UITextFieldLimitDelegate<UITextFieldDelegate>
+
+@optional
+-(void)textFieldLimit:(UITextFieldLimit *)textFieldLimit didWentOverLimitWithDisallowedText:(NSString *)text inDisallowedRange:(NSRange)range;
+-(void)textFieldLimit:(UITextFieldLimit *)textFieldLimit didReachLimitWithLastEnteredText:(NSString *)text inRange:(NSRange)range;
+@end
+
 @interface UITextFieldLimit : UITextField<UITextFieldDelegate> {
     long limit;
-    IBOutlet UILabel *limitLabel;
+    UILabel *limitLabel;
 }
+@property (nonatomic, assign) id<UITextFieldLimitDelegate,UITextFieldDelegate> delegate;
+
 @property (readwrite, nonatomic) long limit;
-@property (retain, nonatomic) IBOutlet UILabel *limitLabel;
-
--(void)initializeLimitLabelWithFont:(UIFont *)font andTextColor:(UIColor *)textColor;
-
+@property (retain, nonatomic) UILabel *limitLabel;
 
 @end
