@@ -66,9 +66,6 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if([self.delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
-        return [self.delegate textField:self shouldChangeCharactersInRange:range replacementString:string];
-    }
     long MAXLENGTH=limit;
     NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if(newText.length==MAXLENGTH) {//Did reach limit
@@ -81,9 +78,16 @@
         if([self.delegate respondsToSelector:@selector(textFieldLimit:didWentOverLimitWithDisallowedText:inDisallowedRange:)]) {
             [self.delegate textFieldLimit:self didWentOverLimitWithDisallowedText:string inDisallowedRange:NSMakeRange(range.location, string.length)];
         }
+        if([self.delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
+            return [self.delegate textField:self shouldChangeCharactersInRange:range replacementString:string];
+        }
         return NO;
     }
     [limitLabel setText:[NSString stringWithFormat:@"%lu",MAXLENGTH-newText.length]];
+    
+    if([self.delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
+        return [self.delegate textField:self shouldChangeCharactersInRange:range replacementString:string];
+    }
     
     return YES;
 }
