@@ -19,7 +19,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         limit=10;// -- Default limit
-        [super setDelegate:self];
+        [super setDelegate:(id<UITextFieldLimitDelegate,UITextFieldDelegate>)self];
         [self initializeLimitLabel];
     }
     return self;
@@ -29,7 +29,7 @@
     self = [super initWithCoder:inCoder];
     if (self) {
         limit=10;// -- Default limit
-        [super setDelegate:self];
+        [super setDelegate:(id<UITextFieldLimitDelegate,UITextFieldDelegate>)self];
         [self initializeLimitLabel];
     }
     return self;
@@ -66,6 +66,9 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if([self.delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
+        return [self.delegate textField:self shouldChangeCharactersInRange:range replacementString:string];
+    }
     long MAXLENGTH=limit;
     NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if(newText.length==MAXLENGTH) {//Did reach limit
@@ -85,21 +88,16 @@
     return YES;
 }
 
--(long)expectedLabelWidthWithText:(NSString *)text andFont:(UIFont *)font {
-    CGRect labelRect = [text
-                        boundingRectWithSize:CGSizeMake(200, 0)
-                        options:NSStringDrawingUsesLineFragmentOrigin
-                        attributes:@{
-                                     NSFontAttributeName : limitLabel.font
-                                     }
-                        context:nil];
-    return labelRect.size.width;
-}
-
 -(void)textFieldDidEndEditing:(UITextField *)textField {
+    if([self.delegate respondsToSelector:@selector(textFieldDidEndEditing:)]) {
+        [self.delegate textFieldDidEndEditing:self];//UITextFieldDelegate
+    }
     limitLabel.hidden=YES;
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if([self.delegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
+        [self.delegate textFieldDidBeginEditing:self];//UITextFieldDelegate
+    }
     if(limitLabel.isHidden) {
         limitLabel.hidden=NO;
     }
@@ -116,6 +114,34 @@
     [shake setToValue:[NSValue valueWithCGPoint:
                        CGPointMake(limitLabel.center.x + 5, limitLabel.center.y)]];
     [limitLabel.layer addAnimation:shake forKey:@"position"];
+}
+
+
+
+//UITextFieldDelegate
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if([self.delegate respondsToSelector:@selector(textFieldShouldBeginEditing:)]) {
+        return [self.delegate textFieldShouldBeginEditing:self];
+    }
+    return YES;
+}
+-(BOOL)textFieldShouldClear:(UITextField *)textField {
+    if([self.delegate respondsToSelector:@selector(textFieldShouldClear:)]) {
+        return [self.delegate textFieldShouldClear:self];
+    }
+    return YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    if([self.delegate respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
+        return [self.delegate textFieldShouldEndEditing:self];
+    }
+    return YES;
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if([self.delegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
+        return [self.delegate textFieldShouldReturn:self];
+    }
+    return YES;
 }
 
 @end
