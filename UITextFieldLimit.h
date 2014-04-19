@@ -24,7 +24,7 @@
     long limit;
     UILabel *limitLabel;
 }
-@property (nonatomic, assign) id<UITextFieldLimitDelegate,UITextFieldDelegate> delegate;
+@property (nonatomic, assign) id<UITextFieldLimitDelegate> delegate;
 
 @property (readwrite, nonatomic) long limit;
 @property (retain, nonatomic) UILabel *limitLabel;
