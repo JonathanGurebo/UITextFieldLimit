@@ -14,5 +14,5 @@ Features list:
 
 Copy the UITextFieldLimit.h and UITextFieldLimit.m files to your xcode project.
 
-NO LICENCE! WOHOOO! It's developed by Jonathan Gurebo! and it means that you can do whatever you like to do.
-Sell it, modify it, distribute it, copy it, resell it, patent it. Do what-ever you like. But you can give me credit if you like to ;) OPTIONAL
+This project is under the Apache License 2.0
+See https://github.com/JonathanGurebo/UITextFieldLimit/wiki/License
