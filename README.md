@@ -15,4 +15,5 @@ Features list:
 Copy the UITextFieldLimit.h and UITextFieldLimit.m files to your xcode project.
 
 This project is under the Apache License 2.0
+
 See https://github.com/JonathanGurebo/UITextFieldLimit/wiki/License
