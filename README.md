@@ -1,7 +1,7 @@
 UITextFieldLimit
 ================
 
-This sub-class of the UITextField, written in ARC, adds a text length limit. It also shows the number of left characters inside the TextField.
+This sub-class of the UITextField, written in Objective-C (ARC), provides more feutures to the UITextField in the iOS SDK, like a text length limit. It also shows the number of left characters inside the TextField.
 Use it for multiple TextFields, the number of left characters will hidden when the user ends the editing. The display label includes a shake animation when no characters left.
 
 Features list:
